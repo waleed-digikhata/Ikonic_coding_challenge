@@ -52,19 +52,19 @@ function getRequests(page=1,mode) {
               table += '<button id="accept_request_btn_" class="btn btn-primary me-1" onClick="acceptRequest('+config.data.user_id+','+v['user']['id']+')">Accept</button>';
               table += '</td>'
             }
-            
+
             table += '</tr>';
           })
         }else{
           $(`#request_table_${mode}`).html('')
         }
-        
+
         if(page == 1){
           $(`#request_table_${mode}`).html('')
         }
-        
+
         $(`#request_table_${mode}`).append(table);
-        
+
         if(response['requests']['next_page_url']){
           let nextPage = getUrlVars(response['requests']['next_page_url'])['page']
           $(`#load_more_btn_parent_request_${mode}`).removeClass('d-none')
@@ -130,7 +130,7 @@ function getConnections(page=1) {
           $('#connections_table').html('')
         }
         $('#connections_table').append(table);
-        
+
         if(response['connections']['next_page_url']){
           let nextPage = getUrlVars(response['connections']['next_page_url'])['page']
           $('#load_more_btn_parent_connection').removeClass('d-none')
@@ -200,7 +200,7 @@ function getSuggestions(page=1) {
             $('#suggestion_table').html('')
           }
           $('#suggestion_table').append(table);
-          
+
           if(response['suggestions']['next_page_url']){
             let nextPage = getUrlVars(response['suggestions']['next_page_url'])['page']
             $('#load_more_btn_parent_suggestion').removeClass('d-none')
@@ -261,7 +261,7 @@ function deleteRequest(userId, requestId) {
   $.ajax({
     url: config.routes.deleteRequest,
     type: 'POST',
-    data: {'userId':userId,'requestId':requestId,'method':'request'},
+    data: {'userId':userId,'requestId':requestId,'methodType':'request'},
     dataType: 'json', // added data type
     error: function(xhr, textStatus, error) {
       console.log(xhr.responseText);
@@ -327,7 +327,7 @@ function removeConnection(userId, connectionId) {
   $.ajax({
     url: config.routes.deleteRequest,
     type: 'POST',
-    data: {'userId':userId,'connectionId':connectionId,'method':'connection'},
+    data: {'userId':userId,'connectionId':connectionId,'methodType':'connection'},
     dataType: 'json', // added data type
     error: function(xhr, textStatus, error) {
       console.log(xhr.responseText);
@@ -353,5 +353,5 @@ function removeConnection(userId, connectionId) {
 
 $(function () {
   getSuggestions();
-  
+
 });

@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -43,7 +43,7 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -78,14 +78,14 @@ class UserController extends Controller
             DB::rollBack();
             return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
         }
-        
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function acceptRequest(Request $request)
     {
@@ -101,7 +101,7 @@ class UserController extends Controller
             DB::rollBack();
             return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
         }
-        
+
     }
 
     /**
@@ -142,13 +142,13 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Request $request)
     {
         $userId = $request->userId;
-        $method = $request->method;
-        
+        $method = $request->methodType;
+
         DB::beginTransaction();
         try{
             if($method =='request'){
@@ -159,7 +159,7 @@ class UserController extends Controller
                 $deleteConnection = Connection::where('user_id',$userId)->where('connection_id',$id)->delete();
             }
             DB::commit();
-            return response()->json(['success'=>true,'msg'=>'Data saved successfully.']);
+            return response()->json(['success'=>true,'msg'=>'Data delete successfully.']);
         }catch(\Exception $e){
             DB::rollBack();
             return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
